@@ -5,6 +5,7 @@ export const ContainerInput = styled.div`
   margin: -1.7rem auto 0;
   display: flex;
   align-items: center;
+  padding: 0 1rem;
   justify-content: center;
   
   button {
@@ -47,6 +48,7 @@ export const ContainerInput = styled.div`
 export const ContainerTask = styled.div`
   max-width: 736px;
   margin: 4rem auto 0;
+  padding: 0 1rem;
 `
 
 export const TaskSummary = styled.div`
@@ -111,11 +113,21 @@ export const Tasks = styled.ul`
     background: var(--gray-500);
     margin-bottom: 12px;
     border-radius: 0.5rem;
+    transition: 0.2s;
+
+    &:hover{
+      background: var(--gray-400);
+    }
 
     button {
       background: transparent;
       border: none;
       margin-left: auto;
+      transition: 0.2s;
+
+      &:hover{
+        transform: scale(1.1)
+      }
     }
   }
 
