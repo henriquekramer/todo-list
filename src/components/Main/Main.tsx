@@ -2,7 +2,7 @@ import { ContainerInput, ContainerTask, EmptyTasks, Tasks, TaskSummary, TitleTas
 import plus from '../../assets/plus.svg'
 import trash from '../../assets/trash.svg'
 import clipboard from '../../assets/clipboard.svg'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 
 interface Task{
@@ -11,9 +11,24 @@ interface Task{
   isCompleted: boolean;
 }
 
+function getTasksValues(){
+  const storedTasks = localStorage.getItem('tasks');
+  if(storedTasks){
+    return JSON.parse(storedTasks);
+  }
+  return [];
+}
+
 export function Main(){
   const [taskTitle, setTaskTitle]= useState('')
-  const [tasks, setTasks] = useState<Task[]>([])
+  const [tasks, setTasks] = useState<Task[]>(getTasksValues)
+  const completedTasks = tasks.filter(task => {
+    return task.isCompleted
+  }).length
+
+  useEffect(()=> {
+    localStorage.setItem('tasks', JSON.stringify(tasks))
+  }, [tasks])
 
   function handleCreateNewTask(){
     if(taskTitle === ''){
@@ -45,10 +60,6 @@ export function Main(){
     setTasks(updatedTasks)
   }
 
-  const completedTasks = tasks.filter(task => {
-    return task.isCompleted
-  })
-
   return (
     <>
       <ContainerInput>
@@ -75,7 +86,7 @@ export function Main(){
           </div>
           <div>
             <p>Concluídas</p>
-            <span>{completedTasks.length} de {tasks.length}</span>
+            <span>{completedTasks} de {tasks.length}</span>
           </div>
         </TaskSummary>
 
@@ -97,7 +108,9 @@ export function Main(){
               </button>
             </li>
           ))}
-        </Tasks> : 
+        </Tasks> 
+        
+        : 
         
         <EmptyTasks>
           <img src={clipboard} alt="clipboard" />
