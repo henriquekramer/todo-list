@@ -1,9 +1,14 @@
 import { ContainerInput, ContainerTask, EmptyTasks, Tasks, TaskSummary, TitleTask } from "./styles";
+import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from 'uuid';
+import Modal from 'react-modal'
 import plus from '../../assets/plus.svg'
 import trash from '../../assets/trash.svg'
 import clipboard from '../../assets/clipboard.svg'
-import { useEffect, useState } from "react";
-import { v4 as uuidv4 } from 'uuid';
+import closeImg from '../../assets/close.svg'
+import { ModalTask } from "../Modal/ModalTask";
+
+Modal.setAppElement('#root');
 
 interface Task{
   taskTitle: string;
@@ -22,6 +27,9 @@ function getTasksValues(){
 export function Main(){
   const [taskTitle, setTaskTitle]= useState('')
   const [tasks, setTasks] = useState<Task[]>(getTasksValues)
+  const [isOpen, setIsOpen] = useState(false)
+  const [idToDelete, setIdToDelete] = useState('')
+
   const completedTasks = tasks.filter(task => {
     return task.isCompleted
   }).length
@@ -58,6 +66,14 @@ export function Main(){
       return task
     })
     setTasks(updatedTasks)
+  }
+
+  function onRequestOpen(){
+    setIsOpen(true)
+  }
+
+  function onRequestClose(){
+    setIsOpen(false)
   }
 
   return (
@@ -98,20 +114,23 @@ export function Main(){
               <input
                type="checkbox"
                checked={task.isCompleted} 
+               readOnly
                onClick={() => handleToggleTaskCompleted(task.id)}
               />
               <TitleTask isCompleted={task.isCompleted}>{task.taskTitle}</TitleTask>
               <button
-                onClick={()=> handleDeleteTask(task.id)}
+                onClick={()=> {
+                  setIdToDelete(task.id)
+                  onRequestOpen()
+                  // handleDeleteTask(task.id)
+                }}
               >
                 <img src={trash} alt="trash" />
               </button>
             </li>
           ))}
         </Tasks> 
-        
         : 
-        
         <EmptyTasks>
           <img src={clipboard} alt="clipboard" />
           <p><span>Você ainda não tem tarefas cadastradas</span><br/>
@@ -119,6 +138,9 @@ export function Main(){
         </EmptyTasks> }
         
       </ContainerTask>
+
+
+      <ModalTask isOpen={isOpen} onRequestClose={onRequestClose} handleDeleteTask={handleDeleteTask} idToDelete={idToDelete}/>
     </>
 
   )
