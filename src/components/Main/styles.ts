@@ -36,7 +36,12 @@ export const ContainerInput = styled.div`
     border: none;
     background: var(--gray-500);
     color: var(--gray-300);
+
+    &:focus{
+      border: 1px solid var(--blue-dark);
+    }
   }
+
 `
 
 export const ContainerTask = styled.div`
@@ -86,6 +91,19 @@ export const Tasks = styled.ul`
   margin-top: 1.5rem;
   list-style: none;
 
+  input[type=checkbox]{
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid var(--blue);
+    -webkit-appearance: none;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  input[type=checkbox]:checked {
+    background-color: var(--blue);
+  }
+
   li {
     display: flex;
     align-items: center;
@@ -99,7 +117,6 @@ export const Tasks = styled.ul`
       border: none;
       margin-left: auto;
     }
-  
   }
 
 `
