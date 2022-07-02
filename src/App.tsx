@@ -1,6 +1,5 @@
 import { Header } from "./components/Header/Header"
-import { TasksData } from "./components/TaskInput/TaskInput"
-import { TaskList } from "./components/TaskList/TaskList"
+import { Main } from "./components/Main/Main"
 import { GlobalStyle } from "./styles/global"
 
 function App() {
@@ -8,8 +7,7 @@ function App() {
   return (
     <>
       <Header />
-      <TasksData />
-      <TaskList />
+      <Main />
       <GlobalStyle />
     </>
   )
