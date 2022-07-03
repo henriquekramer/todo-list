@@ -9,7 +9,7 @@ export const ContainerInput = styled.div`
   justify-content: center;
   
   button {
-    font-size:14px;
+    font-size:15px;
     margin-left: 0.5rem;
     padding: 1rem;
     color: var(--gray-100);
@@ -32,7 +32,9 @@ export const ContainerInput = styled.div`
 
   input {
     width: 100%;
+    font-size: 15px;
     padding: 1rem;
+    font-weight: 500;
     border-radius: 0.5rem;
     border: none;
     background: var(--gray-500);
@@ -61,14 +63,14 @@ export const TaskSummary = styled.div`
 
     p {
       font-weight: 700;
-      font-size: 14px;
+      font-size: 16px;
       margin-right: 0.5rem;
     }
 
     span {
       background: var(--gray-400);
       color: var(--gray-200);
-      font-size: 12px;
+      font-size: 15px;
       font-weight: 700;
       padding: 2px 1rem;
       border-radius: 0.5rem;
@@ -125,6 +127,10 @@ export const Tasks = styled.ul`
       margin-left: auto;
       transition: 0.2s;
 
+      img {
+        width: 2rem;
+      }
+
       &:hover{
         transform: scale(1.1)
       }
@@ -138,7 +144,7 @@ interface TitleTaskProps {
 
 export const TitleTask = styled.p<TitleTaskProps>`
   margin-left: 1rem;
-  font-size: 14px;
+  font-size: 16px;
   color: ${(props) => props.isCompleted ? 'var(--gray-300)': 'var(--gray-100)'};
   text-decoration: ${(props) => props.isCompleted ? 'line-through': 'none'}
 `
