@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import checkedSvg from '../../assets/checked.svg'
 
 export const ContainerInput = styled.div`
   max-width: 736px;
@@ -27,6 +28,11 @@ export const ContainerInput = styled.div`
 
     &:hover {
       filter: brightness(0.9)
+    }
+    
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.7;
     }
   }
 
@@ -102,10 +108,23 @@ export const Tasks = styled.ul`
     -webkit-appearance: none;
     border-radius: 50%;
     cursor: pointer;
+    position: relative;
   }
 
   input[type=checkbox]:checked {
     background-color: var(--blue);
+  }
+
+  input:checked::before{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background-image: url(${checkedSvg});
+    background-repeat: no-repeat;
+    top: 0.2rem;
+    left: 0.05rem;
   }
 
   li {

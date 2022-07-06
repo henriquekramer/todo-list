@@ -54,12 +54,12 @@ export function Main(){
   }
 
   function handleDeleteTask(id: string){
-    const updatedTasks = [...tasks].filter(task => task.id !== id)
+    const updatedTasks = tasks.filter(task => task.id !== id)
     setTasks(updatedTasks)
   }
 
   function handleToggleTaskCompleted(id: string){
-    const updatedTasks = [...tasks].map(task => {
+    const updatedTasks = tasks.map(task => {
       if(task.id === id){
         task.isCompleted = !task.isCompleted
       }
@@ -76,6 +76,8 @@ export function Main(){
     setIsOpen(false)
   }
 
+  const isNewTaskEmpty = taskTitle.length === 0;
+
   return (
     <>
       <ContainerInput>
@@ -87,6 +89,7 @@ export function Main(){
         />
         <button
           type="submit"
+          disabled={isNewTaskEmpty}
           onClick={handleCreateNewTask}
         >
           <span>Criar</span> 
