@@ -32,14 +32,12 @@ Você pode acessar o layout do projeto através do link abaixo
 
 
 
-<h2>Desktop</h2>
+<h2>Aplicativo em uso</h2>
 
 <p align="center">
-    <img src = "https://user-images.githubusercontent.com/97106134/177018405-d1a29d0f-a62c-4399-8972-7928f13559bb.png" width="90%" />
+    <img src = "https://user-images.githubusercontent.com/97106134/177787548-a1876d1a-fb23-4ccd-a75a-d2131deb7c4a.gif" width="90%" />
 </p>
-<p align="center">
-    <img src = "https://user-images.githubusercontent.com/97106134/177018421-852095b2-2bac-46ea-8bd2-002207563dc5.png" width="90%" />
-</p>
+
 
 
 ## 🚀 Tecnologias
