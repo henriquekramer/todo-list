@@ -140,18 +140,32 @@ export const Tasks = styled.ul`
       background: var(--gray-400);
     }
 
-    button {
-      background: transparent;
-      border: none;
+    div {
       margin-left: auto;
-      transition: 0.2s;
 
-      img {
-        width: 1.8rem;
-      }
+      button {
+        background: transparent;
+        border: none;
+        transition: 0.2s;
+        color:var(--gray-300);
 
-      &:hover{
-        transform: scale(1.1)
+        &:hover{
+          transform: scale(1.1);
+        }
+
+        &:nth-child(1){
+          &:hover{
+            color: var(--blue);
+          }
+        }
+
+        &:nth-child(2){
+          margin-left: 1rem;
+
+          &:hover{
+            color: var(--danger);
+          }
+        }
       }
     }
   }

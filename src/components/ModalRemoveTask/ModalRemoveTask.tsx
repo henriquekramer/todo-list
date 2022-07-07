@@ -4,24 +4,24 @@ import { ContainerModal } from './styles';
 
 interface ModalProps{
   isOpen: boolean;
-  onRequestClose: () => void;
+  onRequestCloseRemoveModal: () => void;
   handleDeleteTask: (id: string)=> void;
   idToDelete: string;
 }
 
 Modal.setAppElement('#root');
 
-export function ModalTask({isOpen, onRequestClose, idToDelete, handleDeleteTask}: ModalProps){
+export function ModalRemoveTask({isOpen, onRequestCloseRemoveModal, idToDelete, handleDeleteTask}: ModalProps){
   return (
     <Modal 
     isOpen={isOpen}
-    onRequestClose={onRequestClose}
+    onRequestClose={onRequestCloseRemoveModal}
     overlayClassName="react-modal-overlay"
     className="react-modal-content"
   >
     <button 
       type="button" 
-      onClick={onRequestClose} 
+      onClick={onRequestCloseRemoveModal} 
       className="react-modal-close"
     >
       <img src={closeImg} alt="Fechar modal" />
@@ -33,14 +33,14 @@ export function ModalTask({isOpen, onRequestClose, idToDelete, handleDeleteTask}
       <div>
         <button
           type="button" 
-          onClick={onRequestClose} 
+          onClick={onRequestCloseRemoveModal} 
         >
           Cancelar
         </button>
         <button
           onClick={()=> {
             handleDeleteTask(idToDelete)
-            onRequestClose()
+            onRequestCloseRemoveModal()
           }}
         >
           Excluir
