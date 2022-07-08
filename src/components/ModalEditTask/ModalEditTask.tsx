@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Modal from 'react-modal'
 import closeImg from '../../assets/close.svg'
+import { useTasks } from '../../hooks/useTasks';
 import { ContainerModal } from './styles';
 
 interface Task{
@@ -9,22 +10,16 @@ interface Task{
   isCompleted: boolean;
 }
 
-interface ModalProps{
-  isOpen: boolean;
-  onRequestCloseEditModal: () => void;
-  editTaskTitle: (newTitleTask:string) => void;
-}
-
 Modal.setAppElement('#root');
 
-export function ModalEditTask({isOpen, onRequestCloseEditModal, editTaskTitle}: ModalProps){
+export function ModalEditTask(){
+  const {onRequestCloseEditModal, isOpenEditModal, editTaskTitle  } = useTasks();
   const [newTitleTask, setNewTitleTask] = useState('')
-
   const newTitleTaskEmpty = newTitleTask.length === 0;
   
   return (
     <Modal 
-    isOpen={isOpen}
+    isOpen={isOpenEditModal}
     onRequestClose={onRequestCloseEditModal}
     overlayClassName="react-modal-overlay"
     className="react-modal-content"

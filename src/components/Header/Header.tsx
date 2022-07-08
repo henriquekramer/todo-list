@@ -1,7 +1,8 @@
 import { Container, Content } from "./styles";
 import logo from '../../assets/logo.png'
+import { memo } from "react";
 
-export function Header(){
+export function HeaderComponent(){
   return (
     <Container>
       <Content>
@@ -10,3 +11,5 @@ export function Header(){
     </Container>
   )
 }
+
+export const Header = memo(HeaderComponent)

@@ -1,44 +1,18 @@
 import { ContainerInput, ContainerTask, EmptyTasks, Tasks, TaskSummary, TitleTask } from "./styles";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
-import Modal from 'react-modal'
 import plus from '../../assets/plus.svg'
 import clipboard from '../../assets/clipboard.svg'
-import { ModalRemoveTask } from "../ModalRemoveTask/ModalRemoveTask";
 import { PencilLine, Trash } from 'phosphor-react'
-import { ModalEditTask } from "../ModalEditTask/ModalEditTask";
-
-Modal.setAppElement('#root');
-
-interface Task{
-  taskTitle: string;
-  id: string;
-  isCompleted: boolean;
-}
-
-function getTasksValues(){
-  const storedTasks = localStorage.getItem('tasks');
-  if(storedTasks){
-    return JSON.parse(storedTasks);
-  }
-  return [];
-}
+import { useTasks } from "../../hooks/useTasks";
 
 export function Main(){
+  const { handleRemoveTask, handleEditTask, handleToggleTaskCompleted, setTasks, tasks } = useTasks();
   const [taskTitle, setTaskTitle]= useState('')
-  const [tasks, setTasks] = useState<Task[]>(getTasksValues)
-  const [isOpenRemoveModal, setIsOpenRemoveModal] = useState(false)
-  const [isOpenEditModal, setIsOpenEditModal] = useState(false)
-  const [idToDelete, setIdToDelete] = useState('')
-  const [idToEdit, setIdToEdit] = useState('')
 
   const completedTasks = tasks.filter(task => {
     return task.isCompleted
   }).length
-
-  useEffect(()=> {
-    localStorage.setItem('tasks', JSON.stringify(tasks))
-  }, [tasks])
 
   function handleCreateNewTask(){
     if(taskTitle === ''){
@@ -53,52 +27,6 @@ export function Main(){
 
     setTasks([...tasks, newTask])
     setTaskTitle('')
-  }
-
-  function handleDeleteTask(id: string){
-    const updatedTasks = tasks.filter(task => task.id !== id)
-    setTasks(updatedTasks)
-  }
-
-  function handleToggleTaskCompleted(id: string){
-    const updatedTasks = tasks.map(task => {
-      if(task.id === id){
-        task.isCompleted = !task.isCompleted
-      }
-      return task
-    })
-    setTasks(updatedTasks)
-  }
-
-  function onRequestCloseRemoveModal(){
-    setIsOpenRemoveModal(false)
-  }
-
-  function onRequestCloseEditModal(){
-    setIsOpenEditModal(false)
-  }
-
-  function handleRemoveTask(id: string){
-    setIsOpenRemoveModal(true)
-    setIdToDelete(id)
-  }
-
-  function handleEditTask(id: string){
-    setIsOpenEditModal(true)
-    setIdToEdit(id)
-  }
-
-  function editTaskTitle(newTitleTask:string){
-    if(newTitleTask === ''){
-      return
-    }
-    const newTasks = tasks.map(task => {
-      if(task.id === idToEdit){
-        task.taskTitle = newTitleTask
-      }
-      return task
-    })
-    setTasks(newTasks)
   }
 
   const isNewTaskEmpty = taskTitle.length === 0;
@@ -169,20 +97,6 @@ export function Main(){
         </EmptyTasks> }
         
       </ContainerTask>
-
-
-      <ModalRemoveTask 
-        isOpen={isOpenRemoveModal}
-        onRequestCloseRemoveModal={onRequestCloseRemoveModal} 
-        handleDeleteTask={handleDeleteTask}
-        idToDelete={idToDelete}
-      />
-
-      <ModalEditTask
-        isOpen={isOpenEditModal}
-        onRequestCloseEditModal={onRequestCloseEditModal} 
-        editTaskTitle={editTaskTitle}
-      />
     </>
 
   )

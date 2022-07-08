@@ -1,20 +1,17 @@
 import Modal from 'react-modal'
 import closeImg from '../../assets/close.svg'
+import { useTasks } from '../../hooks/useTasks';
 import { ContainerModal } from './styles';
-
-interface ModalProps{
-  isOpen: boolean;
-  onRequestCloseRemoveModal: () => void;
-  handleDeleteTask: (id: string)=> void;
-  idToDelete: string;
-}
 
 Modal.setAppElement('#root');
 
-export function ModalRemoveTask({isOpen, onRequestCloseRemoveModal, idToDelete, handleDeleteTask}: ModalProps){
+export function ModalRemoveTask(){
+
+  const {onRequestCloseRemoveModal, idToDelete, handleDeleteTask, isOpenRemoveModal} = useTasks();
+
   return (
     <Modal 
-    isOpen={isOpen}
+    isOpen={isOpenRemoveModal}
     onRequestClose={onRequestCloseRemoveModal}
     overlayClassName="react-modal-overlay"
     className="react-modal-content"
