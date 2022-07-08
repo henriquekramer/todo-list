@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { ModalEditTask } from "../components/ModalEditTask/ModalEditTask";
 import { ModalRemoveTask } from "../components/ModalRemoveTask/ModalRemoveTask";
+import { v4 as uuidv4 } from 'uuid';
 
 interface TasksProviderProps {
   children: ReactNode;
@@ -25,9 +26,9 @@ interface TasksContextData {
   editTaskTitle: (newTaskTitle: string) => void;
   isOpenRemoveModal: boolean;
   isOpenEditModal: boolean;
-  setTasks: (tasks: Task[])=> void
+  setTasks: (tasks: Task[])=> void;
+  handleCreateNewTask: (taskTitle: string) => void;
 }
-
 
 const TasksContext = createContext<TasksContextData>({} as TasksContextData)
 
@@ -49,6 +50,20 @@ export function TasksProvider( {children }: TasksProviderProps) {
   useEffect(()=> {
     localStorage.setItem('tasks', JSON.stringify(tasks))
   }, [tasks])
+
+  function handleCreateNewTask(taskTitle: string){
+    if(taskTitle === ''){
+      return
+    }
+
+    const newTask = {
+      taskTitle: taskTitle,
+      id: uuidv4(),
+      isCompleted: false,
+    }
+
+    setTasks([...tasks, newTask])
+  }
 
   function handleDeleteTask(id: string){
     const updatedTasks = tasks.filter(task => task.id !== id)
@@ -97,7 +112,7 @@ export function TasksProvider( {children }: TasksProviderProps) {
   }
 
   return (
-    <TasksContext.Provider value={{tasks, handleDeleteTask, handleToggleTaskCompleted, onRequestCloseRemoveModal,onRequestCloseEditModal, handleRemoveTask, handleEditTask, idToDelete, idToEdit, editTaskTitle, isOpenRemoveModal, isOpenEditModal, setTasks }}>
+    <TasksContext.Provider value={{tasks, handleDeleteTask, handleToggleTaskCompleted, onRequestCloseRemoveModal,onRequestCloseEditModal, handleRemoveTask, handleEditTask, idToDelete, idToEdit, editTaskTitle, isOpenRemoveModal, isOpenEditModal, setTasks, handleCreateNewTask }}>
       {children}
       {isOpenRemoveModal && <ModalRemoveTask />}
       {isOpenEditModal && <ModalEditTask />}

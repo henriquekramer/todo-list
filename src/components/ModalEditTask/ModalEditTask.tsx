@@ -1,19 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Modal from 'react-modal'
 import closeImg from '../../assets/close.svg'
 import { useTasks } from '../../hooks/useTasks';
 import { ContainerModal } from './styles';
 
-interface Task{
-  taskTitle: string;
-  id: string;
-  isCompleted: boolean;
-}
-
 Modal.setAppElement('#root');
 
 export function ModalEditTask(){
-  const {onRequestCloseEditModal, isOpenEditModal, editTaskTitle  } = useTasks();
+  const {onRequestCloseEditModal, isOpenEditModal, editTaskTitle,setTasks, idToEdit,tasks  } = useTasks();
   const [newTitleTask, setNewTitleTask] = useState('')
   const newTitleTaskEmpty = newTitleTask.length === 0;
   

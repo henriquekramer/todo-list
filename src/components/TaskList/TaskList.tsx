@@ -1,56 +1,17 @@
-import { ContainerInput, ContainerTask, EmptyTasks, Tasks, TaskSummary, TitleTask } from "./styles";
-import { useState } from "react";
-import { v4 as uuidv4 } from 'uuid';
-import plus from '../../assets/plus.svg'
-import clipboard from '../../assets/clipboard.svg'
-import { PencilLine, Trash } from 'phosphor-react'
 import { useTasks } from "../../hooks/useTasks";
+import { ContainerTask, EmptyTasks, Tasks, TaskSummary, TitleTask } from "./styles";
+import { PencilLine, Trash } from 'phosphor-react'
+import clipboard from '../../assets/clipboard.svg'
 
-export function Main(){
-  const { handleRemoveTask, handleEditTask, handleToggleTaskCompleted, setTasks, tasks } = useTasks();
-  const [taskTitle, setTaskTitle]= useState('')
+export function TaskList() {
+  const { tasks, handleToggleTaskCompleted, handleEditTask, handleRemoveTask} = useTasks();
 
   const completedTasks = tasks.filter(task => {
     return task.isCompleted
   }).length
 
-  function handleCreateNewTask(){
-    if(taskTitle === ''){
-      return
-    }
-
-    const newTask = {
-      taskTitle: taskTitle,
-      id: uuidv4(),
-      isCompleted: false,
-    }
-
-    setTasks([...tasks, newTask])
-    setTaskTitle('')
-  }
-
-  const isNewTaskEmpty = taskTitle.length === 0;
-
   return (
-    <>
-      <ContainerInput>
-        <input 
-          type="text"
-          placeholder="Adicione uma nova tarefa"
-          onChange={e => setTaskTitle(e.target.value)}
-          value={taskTitle}
-        />
-        <button
-          type="submit"
-          disabled={isNewTaskEmpty}
-          onClick={handleCreateNewTask}
-        >
-          <span>Criar</span> 
-          <img src={plus} alt="plus" /> 
-        </button>
-      </ContainerInput>
-
-      <ContainerTask>
+    <ContainerTask>
         <TaskSummary>
           <div>
             <p>Tarefas criadas</p>
@@ -97,7 +58,5 @@ export function Main(){
         </EmptyTasks> }
         
       </ContainerTask>
-    </>
-
   )
 }
