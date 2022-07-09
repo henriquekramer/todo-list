@@ -7,7 +7,7 @@ import { ContainerModal } from './styles';
 Modal.setAppElement('#root');
 
 export function ModalEditTask(){
-  const {onRequestCloseEditModal, isOpenEditModal, editTaskTitle,setTasks, idToEdit,tasks  } = useTasks();
+  const {onRequestCloseEditModal, isOpenEditModal, editTaskTitle } = useTasks();
   const [newTitleTask, setNewTitleTask] = useState('')
   const newTitleTaskEmpty = newTitleTask.length === 0;
   
